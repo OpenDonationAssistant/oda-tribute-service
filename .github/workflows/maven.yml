@@ -16,3 +16,4 @@ jobs:
     with:
       service: tribute-service
       version: "${{ github.RUN_NUMBER }}"
+      npm: false
