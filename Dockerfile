@@ -1,5 +1,5 @@
-FROM fedora:41
+FROM fedora:44
 WORKDIR /app
-COPY target/oda-twitch-service /app
+COPY target/oda-tribute-service /app
 
-CMD ["./oda-twitch-service"]
+CMD ["./oda-tribute-service"]
