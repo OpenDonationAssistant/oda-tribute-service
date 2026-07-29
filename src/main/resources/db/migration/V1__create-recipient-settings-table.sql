@@ -1,0 +1,22 @@
+create table recipient_settings (
+    id UUID not null,
+    recipient_id varchar(255) not null,
+    handle_donations boolean not null default false,
+    handle_subscriptions boolean not null default false,
+    handle_purchases boolean not null default false,
+    trigger_alerts boolean not null default false,
+    trigger_donaton boolean not null default false,
+    trigger_reel boolean not null default false,
+    add_to_goal boolean not null default false,
+    count_in_top boolean not null default false,
+    subscriptions_trigger_alerts boolean not null default false,
+    subscriptions_trigger_donaton boolean not null default false,
+    subscriptions_trigger_reel boolean not null default false,
+    subscriptions_add_to_goal boolean not null default false,
+    subscriptions_count_in_top boolean not null default false,
+    purchases_trigger_alerts boolean not null default false,
+    purchases_trigger_donaton boolean not null default false,
+    purchases_trigger_reel boolean not null default false,
+    purchases_add_to_goal boolean not null default false,
+    purchases_count_in_top boolean not null default false
+);

@@ -1,0 +1,8 @@
+datasources:
+  default:
+    db-type: "postgresql"
+logger:
+  levels:
+    io.github.opendonationassistant: DEBUG
+    io.micronaut.http.client: DEBUG
+    io.micronaut.http: DEBUG

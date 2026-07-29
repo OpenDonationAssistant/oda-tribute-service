@@ -1,0 +1,37 @@
+problem:
+  stack-trace: false
+micronaut:
+  application:
+    name: oda-tribute-service
+  serde:
+    serialization:
+      inclusion: ALWAYS
+  security:
+    token:
+      bearer:
+        enabled: true
+      cookie:
+        enabled: true
+      jwt:
+        signatures:
+          jwks:
+            keycloak:
+              url: ${JWKS_URI}
+  metrics:
+    enabled: true
+    export:
+      prometheus:
+        enabled: true
+        descriptions: true
+        step: PT1M
+endpoints:
+  flyway:
+    enabled: true
+  prometheus:
+    sensitive: false
+  metrics:
+    sensitive: false
+flyway:
+  datasources:
+    default:
+      enabled: true
