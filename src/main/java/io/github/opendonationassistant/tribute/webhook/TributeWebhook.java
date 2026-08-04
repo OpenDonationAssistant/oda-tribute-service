@@ -1,8 +1,6 @@
 package io.github.opendonationassistant.tribute.webhook;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.opendonationassistant.commons.Amount;
 import io.github.opendonationassistant.commons.logging.ODALogger;
 import io.github.opendonationassistant.rabbit.RabbitClient;
@@ -14,8 +12,10 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.json.tree.JsonNode;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
+import io.micronaut.serde.ObjectMapper;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -100,10 +100,14 @@ public class TributeWebhook {
     RecipientSettings settings
   ) {
     try {
-      var p = objectMapper.treeToValue(
+      var p = objectMapper.readValueFromTree(
         body.payload(),
         TributeDonationPayload.class
       );
+      if (p == null) {
+        throw new RuntimeException("Payload is null");
+      }
+
       var amount = new Amount(p.amount() / 100, p.amount() % 100, p.currency());
       var id = String.valueOf(p.donationRequestId());
       return new AddHistoryItemCommand(
@@ -143,10 +147,13 @@ public class TributeWebhook {
     RecipientSettings settings
   ) {
     try {
-      var p = objectMapper.treeToValue(
+      var p = objectMapper.readValueFromTree(
         body.payload(),
         TributeSubscriptionPayload.class
       );
+      if (p == null) {
+        throw new RuntimeException("Payload is null");
+      }
       var amount = new Amount(p.amount() / 100, p.amount() % 100, p.currency());
       var id =
         String.valueOf(p.subscriptionId()) + String.valueOf(p.periodId());
@@ -187,10 +194,13 @@ public class TributeWebhook {
     RecipientSettings settings
   ) {
     try {
-      var p = objectMapper.treeToValue(
+      var p = objectMapper.readValueFromTree(
         body.payload(),
         TributeDigitalProductPayload.class
       );
+      if (p == null) {
+        throw new RuntimeException("Payload is null");
+      }
       var amount = new Amount(p.amount() / 100, p.amount() % 100, p.currency());
       var id = String.valueOf(p.purchaseId());
       return new AddHistoryItemCommand(
