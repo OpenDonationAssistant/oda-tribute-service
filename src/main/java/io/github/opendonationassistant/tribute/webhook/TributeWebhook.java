@@ -1,6 +1,7 @@
 package io.github.opendonationassistant.tribute.webhook;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.opendonationassistant.commons.Amount;
 import io.github.opendonationassistant.commons.logging.ODALogger;
@@ -99,7 +100,7 @@ public class TributeWebhook {
     RecipientSettings settings
   ) {
     try {
-      var p = objectMapper.convertValue(
+      var p = objectMapper.treeToValue(
         body.payload(),
         TributeDonationPayload.class
       );
@@ -142,7 +143,7 @@ public class TributeWebhook {
     RecipientSettings settings
   ) {
     try {
-      var p = objectMapper.convertValue(
+      var p = objectMapper.treeToValue(
         body.payload(),
         TributeSubscriptionPayload.class
       );
@@ -186,7 +187,7 @@ public class TributeWebhook {
     RecipientSettings settings
   ) {
     try {
-      var p = objectMapper.convertValue(
+      var p = objectMapper.treeToValue(
         body.payload(),
         TributeDigitalProductPayload.class
       );
@@ -228,7 +229,7 @@ public class TributeWebhook {
     String name,
     @JsonProperty("created_at") Instant createdAt,
     @JsonProperty("sent_at") @Nullable Instant sentAt,
-    Map<String, Object> payload
+    JsonNode payload
   ) {}
 
   @Serdeable
